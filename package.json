@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "angular": "~1.6.4",
+    "angular-gettext": "^2.3.9",
+    "angular-gettext-tools": "^2.3.4",
     "babel-polyfill": "^6.23.0"
   },
   "devDependencies": {
