@@ -40,6 +40,9 @@ export default class Service {
      * @return void
      */
     set current(lang) {
+        if (lang == current) {
+            return;
+        }
         if (languages.indexOf(lang) == -1) {
             throw `Language "${lang}" is unavailable, sorry.`;
         }
