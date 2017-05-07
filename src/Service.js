@@ -2,8 +2,8 @@
 "use strict";
 
 let current = undefined;
-let scope = undefined;
-let catalog = undefined;
+let gettextCatalog = undefined;
+let languages = undefined;
 
 /**
  * Service handling Monad interface languages.
@@ -15,17 +15,12 @@ export default class Service {
      *
      * @param object gettextCatalog Catalog service so a language change sets
      *  the new language.
-     * @param object $rootScope Injector $rootScope.
+     * @param array availableLanguages Array of available languages, as string.
      * @return void
      */
-    constructor(gettextCatalog, $rootScope) {
-        scope = $rootScope;
-        catalog = gettextCatalog;
-        $rootScope.$on('$routeChangeSuccess', (event, target) => {
-            if (target.params.language && target.params.language != current) {
-                this.current = target.params.language;
-            }
-        });
+    constructor(_gettextCatalog_, availableLanguages) {
+        gettextCatalog = _gettextCatalog_;
+        languages = availableLanguages;
     }
 
     /**
@@ -45,11 +40,11 @@ export default class Service {
      * @return void
      */
     set current(lang) {
-        if (scope.languages.indexOf(lang) == -1) {
+        if (languages.indexOf(lang) == -1) {
             throw `Language "${lang}" is unavailable, sorry.`;
         }
         current = lang;
-        catalog.setCurrentLanguage(current);
+        gettextCatalog.setCurrentLanguage(current);
     }
 
     /**
@@ -58,10 +53,10 @@ export default class Service {
      * @return array Array of languages available to this application.
      */
     get list() {
-        return scope.languages;
+        return languages;
     }
 
 };
 
-Service.$inject = ['gettextCatalog', '$rootScope'];
+Service.$inject = ['gettextCatalog'];
 
