@@ -4,8 +4,9 @@
 import 'angular-gettext';
 import Provider from './Provider';
 import Location from './Location';
+import '../lib/templates';
 
-export default angular.module('monad.multilang', ['monad.cms', 'gettext'])
+export default angular.module('monad.multilang', ['monad.cms', 'monad.multilang.templates', 'gettext'])
     .provider('monadLanguageService', Provider)
     .service('monadLocation', Location)
     .config(['$routeProvider', $routeProvider => {
