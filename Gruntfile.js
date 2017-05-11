@@ -4,6 +4,29 @@ module.exports = function (grunt) {
     var pkg = grunt.file.readJSON('package.json');
     grunt.initConfig({pkg});
 
+    grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.config('ngtemplates', {
+        'monad.multilang.templates': {
+            options: {
+                htmlmin: {
+                    collapseBooleanAttributes: true,
+                    collapseWhitespace: false,
+                    removeAttributeQuotes: true,
+                    removeComments: true,
+                    removeEmptyAttributes: true,
+                    removeRedundantAttributes: true,
+                    removeScriptTypeAttributes: true,
+                    removeStyleLinkTypeAttributes: true
+                },
+                standalone: true,
+                prefix: 'Monad/Multilang/'
+            },
+            cwd: 'src',
+            src: ['**/*.html', '!index.html'],
+            dest: 'lib/templates.js'
+        }
+    });
+
     grunt.loadNpmTasks('grunt-browserify');
     grunt.config('browserify', {
         monad: {
@@ -40,7 +63,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['build']);
-    grunt.registerTask('build', ['shell:lib', 'browserify']);
+    grunt.registerTask('build', ['ngtemplates', 'shell:lib', 'browserify']);
     grunt.registerTask('dev', ['build', 'watch']);
     grunt.registerTask('prod', ['shell:clean', 'build', 'uglify']);
 };
