@@ -8,8 +8,8 @@ module.exports = function (grunt) {
     grunt.config('spritesheet', {
         compile: {
             options: {
-                outputImage: 'assets/flags.png',
-                outputCss: 'assets/_flags.scss',
+                outputImage: 'dist/flags.png',
+                outputCss: 'dist/_style.scss',
                 selector: '.flag'
             },
             files: {'': 'assets/*.png'}
@@ -43,7 +43,7 @@ module.exports = function (grunt) {
     grunt.config('browserify', {
         monad: {
             src: 'src/index.js',
-            dest: 'dist/monad-crud.js',
+            dest: 'dist/monad-multilang.js',
             options: {
                 transform: ['babelify'],
                 standalone: 'monad',
@@ -61,8 +61,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.config('uglify', {
         js: {
-            src: 'dist/monad-crud.js',
-            dest: 'dist/monad-crud.min.js'
+            src: 'dist/monad-multilang.js',
+            dest: 'dist/monad-multilang.min.js'
         }
     });
 
@@ -75,7 +75,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', ['build']);
-    grunt.registerTask('build', ['ngtemplates', 'shell:lib', 'browserify']);
+    grunt.registerTask('build', ['ngtemplates', 'spritesheet', 'shell:lib', 'browserify']);
     grunt.registerTask('dev', ['build', 'watch']);
     grunt.registerTask('prod', ['shell:clean', 'build', 'uglify']);
 };
