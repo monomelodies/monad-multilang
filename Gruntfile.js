@@ -4,6 +4,18 @@ module.exports = function (grunt) {
     var pkg = grunt.file.readJSON('package.json');
     grunt.initConfig({pkg});
 
+    grunt.loadNpmTasks('node-spritesheet');
+    grunt.config('spritesheet', {
+        compile: {
+            options: {
+                outputImage: 'assets/flags.png',
+                outputCss: 'assets/_flags.scss',
+                selector: '.flag'
+            },
+            files: {'': 'assets/*.png'}
+        }
+    });
+
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.config('ngtemplates', {
         'monad.multilang.templates': {
